@@ -1,0 +1,18 @@
+name: SkillIssue
+main: org.limestick.skillissue.Main
+version: 0.1
+description: Difficulty back-ported to CB 1060
+commands:
+    difficulty:
+        description: Change the game difficulty.
+        usage: /<command> <peaceful|easy|normal|hard|custom>
+        permission: skillissue.difficulty
+permissions:
+    skillissue.*:
+        description: Permission for all SkillIssue commands.
+        default: op
+        children:
+            skillissue.difficulty: false
+    skillissue.difficulty:
+        description: Permission to set the difficulty.
+        default: op
