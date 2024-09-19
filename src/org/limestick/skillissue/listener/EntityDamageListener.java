@@ -28,6 +28,8 @@ public class EntityDamageListener implements Listener {
 		
 		int damage = (int) Math.floor(e.getDamage() * plugin.diff.damageMultiplier);
 		
+		if (damage < 1 && e.getDamage() >= 1) { damage = 1; }
+		
 		e.setDamage(damage);
 	}
 	
