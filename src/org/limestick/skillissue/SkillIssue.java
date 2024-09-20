@@ -64,44 +64,39 @@ public class SkillIssue extends JavaPlugin {
 	}
 	
 	public static void initConfig(Configuration config) {
-		config.setProperty("difficulty", "normal");
-		config.setProperty("custom.damageMultiplier", 1);
+		config.setProperty("difficulty", diff.name);
+		config.setProperty("custom.damageMultiplier", diff.damageMultiplier);
 	    config.save();
 	}
 	
 	public static String initDiff(String n) {
-		String r;
-		
 		switch(n) {
 			case "peaceful":
+				diff.name = "peaceful";
 				diff.damageMultiplier = 0;
-				r = "peaceful";
 				break;
 			case "easy":
+				diff.name = "easy";
 				diff.damageMultiplier = 0.5;
-				r = "easy";
 				break;
 			case "normal":
-				diff.damageMultiplier = 1;
-				r = "normal";
 				break;
 			case "hard":
+				diff.name = "hard";
 				diff.damageMultiplier = 1.5;
-				r = "hard";
 				break;
 			case "custom":
+				diff.name = "custom";
 				diff.damageMultiplier = config.getDouble("custom.damageMultiplier", 1);
-				r = "custom";
 				break;
 			default:
 				logger.info("["+ name +"] Invalid difficulty name. Defaulting to Normal.");
 				config.setProperty("difficulty", "normal");
 				config.save();
-				r = "normal";
 				break;
 		}
 		
-		return r;
+		return diff.name;
 	}
 
 }
