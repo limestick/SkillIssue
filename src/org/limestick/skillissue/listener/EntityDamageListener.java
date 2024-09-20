@@ -17,7 +17,7 @@ public class EntityDamageListener implements Listener {
 		
 		if(!(e.getEntity() instanceof Player) || e.getDamager() instanceof Player) return;
 		
-		int d = (int) Math.floor(e.getDamage() * SkillIssue.diff.damageMultiplier);
+		int d = (int) Math.floor(e.getDamage() * SkillIssue.diff.mobDamageMultiplier);
 		
 		if (d < 1 && e.getDamage() >= 1) d = 1;
 		

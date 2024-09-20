@@ -11,6 +11,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.util.config.Configuration;
 import org.limestick.skillissue.command.CommandDefinition;
 import org.limestick.skillissue.command.DifficultyCommandDefinition;
+import org.limestick.skillissue.listener.CreatureSpawnListener;
 import org.limestick.skillissue.listener.EntityDamageListener;
 
 public class SkillIssue extends JavaPlugin {
@@ -31,6 +32,7 @@ public class SkillIssue extends JavaPlugin {
 	    
 		PluginManager pm = Bukkit.getServer().getPluginManager();
 		pm.registerEvents(new EntityDamageListener(), this);
+		pm.registerEvents(new CreatureSpawnListener(), this);
 		
 		logger.info("["+ name +"] Enabled.");
 	}
@@ -65,7 +67,8 @@ public class SkillIssue extends JavaPlugin {
 	
 	public static void initConfig(Configuration config) {
 		config.setProperty("difficulty", diff.name);
-		config.setProperty("custom.damageMultiplier", diff.damageMultiplier);
+		config.setProperty("custom.mobDamageMultiplier", diff.mobDamageMultiplier);
+		config.setProperty("custom.mobHealthMultiplier", diff.mobHealthMultiplier);
 	    config.save();
 	}
 	
@@ -73,21 +76,22 @@ public class SkillIssue extends JavaPlugin {
 		switch(n) {
 			case "peaceful":
 				diff.name = "peaceful";
-				diff.damageMultiplier = 0;
+				diff.mobDamageMultiplier = 0;
 				break;
 			case "easy":
 				diff.name = "easy";
-				diff.damageMultiplier = 0.5;
+				diff.mobDamageMultiplier = 0.5;
 				break;
 			case "normal":
 				break;
 			case "hard":
 				diff.name = "hard";
-				diff.damageMultiplier = 1.5;
+				diff.mobDamageMultiplier = 1.5;
 				break;
 			case "custom":
 				diff.name = "custom";
-				diff.damageMultiplier = config.getDouble("custom.damageMultiplier", 1);
+				diff.mobDamageMultiplier = config.getDouble("custom.mobDamageMultiplier", 1);
+				diff.mobHealthMultiplier = config.getDouble("custom.mobHealthMultiplier", 1);
 				break;
 			default:
 				logger.info("["+ name +"] Invalid difficulty name. Defaulting to Normal.");
