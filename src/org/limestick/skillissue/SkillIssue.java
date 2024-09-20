@@ -13,13 +13,13 @@ import org.limestick.skillissue.command.CommandDefinition;
 import org.limestick.skillissue.command.DifficultyCommandDefinition;
 import org.limestick.skillissue.listener.EntityDamageListener;
 
-public class Main extends JavaPlugin {
+public class SkillIssue extends JavaPlugin {
 	
-	public String name = "SkillIssue";
-	public Difficulty diff = new Difficulty();
+	public static String name = "SkillIssue";
+	public static Difficulty diff = new Difficulty();
 	
-	public Logger logger = Bukkit.getServer().getLogger();
-	public Configuration config;
+	public static Logger logger = Bukkit.getServer().getLogger();
+	public static Configuration config;
 
 	@Override
 	public void onEnable() {
@@ -27,11 +27,10 @@ public class Main extends JavaPlugin {
 		
 		if(config.getKeys().isEmpty()) initConfig(config);
 		
-		initDiff(diff, config.getString("difficulty", "normal"));
+		initDiff(config.getString("difficulty", "normal"));
 	    
 		PluginManager pm = Bukkit.getServer().getPluginManager();
-		EntityDamageListener listener = new EntityDamageListener(this);
-		pm.registerEvents(listener, this);
+		pm.registerEvents(new EntityDamageListener(), this);
 		
 		logger.info("["+ name +"] Enabled.");
 	}
@@ -52,7 +51,7 @@ public class Main extends JavaPlugin {
 			
 			switch(cmdName) {
 				case "difficulty":
-					cd = new DifficultyCommandDefinition(this);
+					cd = new DifficultyCommandDefinition();
 					break;
 			}
 					
@@ -64,34 +63,34 @@ public class Main extends JavaPlugin {
 		return true;
 	}
 	
-	public void initConfig(Configuration config) {
+	public static void initConfig(Configuration config) {
 		config.setProperty("difficulty", "normal");
 		config.setProperty("custom.damageMultiplier", 1);
 	    config.save();
 	}
 	
-	public String initDiff(Difficulty d, String n) {
+	public static String initDiff(String n) {
 		String r;
 		
 		switch(n) {
 			case "peaceful":
-				d.damageMultiplier = 0;
+				diff.damageMultiplier = 0;
 				r = "peaceful";
 				break;
 			case "easy":
-				d.damageMultiplier = 0.5;
+				diff.damageMultiplier = 0.5;
 				r = "easy";
 				break;
 			case "normal":
-				d.damageMultiplier = 1;
+				diff.damageMultiplier = 1;
 				r = "normal";
 				break;
 			case "hard":
-				d.damageMultiplier = 1.5;
+				diff.damageMultiplier = 1.5;
 				r = "hard";
 				break;
 			case "custom":
-				d.damageMultiplier = config.getDouble("custom.damageMultiplier", 1);
+				diff.damageMultiplier = config.getDouble("custom.damageMultiplier", 1);
 				r = "custom";
 				break;
 			default:

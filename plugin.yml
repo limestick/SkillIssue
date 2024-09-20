@@ -1,5 +1,5 @@
 name: SkillIssue
-main: org.limestick.skillissue.Main
+main: org.limestick.skillissue.SkillIssue
 version: 0.1
 description: Difficulty back-ported to CB 1060
 commands:

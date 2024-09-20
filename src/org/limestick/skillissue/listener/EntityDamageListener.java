@@ -5,15 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDamageEvent;
-import org.limestick.skillissue.Main;
+import org.limestick.skillissue.SkillIssue;
 
 public class EntityDamageListener implements Listener {
-	
-	Main plugin;
-	
-	public EntityDamageListener(Main plugin) {
-		this.plugin = plugin;
-	}
 	
 	@EventHandler
 	public void onEntityDamage(EntityDamageEvent event) {
@@ -23,7 +17,7 @@ public class EntityDamageListener implements Listener {
 		
 		if(!(e.getEntity() instanceof Player) || e.getDamager() instanceof Player) return;
 		
-		int d = (int) Math.floor(e.getDamage() * plugin.diff.damageMultiplier);
+		int d = (int) Math.floor(e.getDamage() * SkillIssue.diff.damageMultiplier);
 		
 		if (d < 1 && e.getDamage() >= 1) d = 1;
 		
