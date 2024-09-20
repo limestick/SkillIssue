@@ -15,7 +15,8 @@ public class CreatureSpawnListener implements Listener {
 		int h = (int) Math.floor(c.getHealth() * SkillIssue.diff.mobHealthMultiplier);
 		
 		// java.lang.IllegalArgumentException: Health must be between 0 and 200
-		if(h < 0) h = 0;
+		// 0 health also de-spawns any mob immediately
+		if(h < 1) h = 1;
 		else if (h > 200) h = 200;
 		
 		c.setHealth(h);
